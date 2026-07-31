@@ -22,9 +22,14 @@ class LoginPage extends StatelessWidget {
               Spacer(flex: 2),
               AppTextField(hintText: 'email@dominio.com'),
               AppTextField(hintText: '**********'),
-              TextButton(
-                onPressed: () => {},
-                child: Text('Esqueci minha senha'),
+              Row(
+                children: [
+                  Spacer(),
+                  TextButton(
+                    onPressed: () => {},
+                    child: Text('Esqueci minha senha'),
+                  ),
+                ],
               ),
               AppElevatedButton(
                 blackBackground: true,
