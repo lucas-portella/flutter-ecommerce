@@ -32,13 +32,13 @@ class LoginPage extends StatelessWidget {
                 ],
               ),
               AppElevatedButton(
-                blackBackground: true,
+                type: ButtonType.filled,
                 onPressed: () => {},
                 buttonText: 'Entrar',
               ),
               AppElevatedButton(
+                type: ButtonType.outlined,
                 onPressed: () => {print('Segundo botao')},
-                blackBackground: false,
                 buttonText: 'Cadastrar-se',
               ),
               Spacer(flex: 2),
