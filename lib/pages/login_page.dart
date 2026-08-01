@@ -1,3 +1,4 @@
+import 'package:ecommerce/pages/signup_page.dart';
 import 'package:ecommerce/shared/app_text_style.dart';
 import 'package:ecommerce/shared/widgets/app_elevated_button.dart';
 import 'package:ecommerce/shared/widgets/app_text_field.dart';
@@ -5,6 +6,8 @@ import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
+
+  static String route = '/login';
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +36,16 @@ class LoginPage extends StatelessWidget {
               ),
               AppElevatedButton(
                 type: ButtonType.filled,
-                onPressed: () => {},
+                onPressed: () => print('Navegando para validação do login'),
                 buttonText: 'Entrar',
               ),
               AppElevatedButton(
                 type: ButtonType.outlined,
-                onPressed: () => {print('Segundo botao')},
+                onPressed: () => Navigator.pushNamed(
+                  context,
+                  SignupPage.route,
+                  arguments: 'Vim da primeira tela',
+                ),
                 buttonText: 'Cadastrar-se',
               ),
               Spacer(flex: 2),

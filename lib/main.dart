@@ -1,4 +1,5 @@
 import 'package:ecommerce/pages/login_page.dart';
+import 'package:ecommerce/routes.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,9 +12,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      routes: AppRoutes.routes,
       title: 'Flutter Demo',
-      theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.deepPurple)),
-      home: LoginPage(),
+      initialRoute: LoginPage.route,
     );
   }
 }
