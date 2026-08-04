@@ -1,4 +1,5 @@
 import 'package:ecommerce/pages/signup_page.dart';
+import 'package:ecommerce/shared/app_colors.dart';
 import 'package:ecommerce/shared/app_text_style.dart';
 import 'package:ecommerce/shared/widgets/app_elevated_button.dart';
 import 'package:ecommerce/shared/widgets/app_text_field.dart';
@@ -17,10 +18,16 @@ class LoginPage extends StatelessWidget {
         child: Padding(
           padding: EdgeInsetsGeometry.symmetric(horizontal: 24),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.start,
+            spacing: 4,
             children: [
               Spacer(),
+              Image.asset(
+                'assets/images/cadiado.png',
+                width: 125,
+                height: 125,
+                fit: BoxFit.contain,
+              ),
               Text('+DevsEcomm', style: AppTextStyle.title),
               Spacer(flex: 2),
               AppTextField(hintText: 'email@dominio.com'),
