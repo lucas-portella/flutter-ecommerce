@@ -1,5 +1,4 @@
 import 'package:ecommerce/pages/signup_page.dart';
-import 'package:ecommerce/shared/app_colors.dart';
 import 'package:ecommerce/shared/app_text_style.dart';
 import 'package:ecommerce/shared/widgets/app_elevated_button.dart';
 import 'package:ecommerce/shared/widgets/app_text_field.dart';
@@ -31,7 +30,7 @@ class LoginPage extends StatelessWidget {
               Text('+DevsEcomm', style: AppTextStyle.title),
               Spacer(flex: 2),
               AppTextField(hintText: 'email@dominio.com'),
-              AppTextField(hintText: '**********'),
+              AppTextField(hintText: '**********', obscureText: true),
               Row(
                 children: [
                   Spacer(),
