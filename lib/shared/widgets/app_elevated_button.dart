@@ -12,7 +12,7 @@ class AppElevatedButton extends StatelessWidget {
     required this.type,
   });
 
-  final VoidCallback onPressed;
+  final void Function()? onPressed;
   final ButtonType type;
   final String buttonText;
 

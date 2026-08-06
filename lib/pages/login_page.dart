@@ -4,13 +4,30 @@ import 'package:ecommerce/shared/widgets/app_elevated_button.dart';
 import 'package:ecommerce/shared/widgets/app_text_field.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   static String route = '/login';
 
   @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  String email = '';
+  String senha = '';
+  bool isActiveButton = false;
+  bool checkBoxValue = false;
+
+  @override
+  initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    isActiveButton = email.trim().isNotEmpty && senha.trim().isNotEmpty;
+
     return Scaffold(
       // SafeArea desconta espaços do dispositivo (ex.: barra superior)
       body: SafeArea(
@@ -29,8 +46,35 @@ class LoginPage extends StatelessWidget {
               ),
               Text('+DevsEcomm', style: AppTextStyle.title),
               Spacer(flex: 2),
-              AppTextField(hintText: 'email@dominio.com'),
-              AppTextField(hintText: '**********', obscureText: true),
+              AppTextField(
+                hintText: 'email@dominio.com',
+                onChanged: (value) {
+                  setState(() => email = value);
+                  print(email);
+                },
+              ),
+              AppTextField(
+                hintText: '**********',
+                obscureText: true,
+                onChanged: (value) {
+                  setState(() => senha = value);
+                  print(senha);
+                },
+              ),
+              Row(
+                children: [
+                  Checkbox(
+                    value: checkBoxValue,
+                    onChanged: (value) {
+                      setState(() {
+                        checkBoxValue = !checkBoxValue;
+                      });
+                      print('Cliquei no checkbox');
+                    },
+                  ),
+                  Text('Lembrar-me'),
+                ],
+              ),
               Row(
                 children: [
                   Spacer(),
@@ -42,7 +86,11 @@ class LoginPage extends StatelessWidget {
               ),
               AppElevatedButton(
                 type: ButtonType.filled,
-                onPressed: () => print('Navegando para validação do login'),
+                onPressed: isActiveButton
+                    ? () {
+                        print('Cliquei em entrar');
+                      }
+                    : null,
                 buttonText: 'Entrar',
               ),
               AppElevatedButton(
