@@ -30,4 +30,16 @@ class AppTextStyle {
     fontSize: 14,
     fontWeight: FontWeight.w400,
   );
+
+  static const TextStyle validatedAppRequirement = TextStyle(
+    color: AppColors.green,
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+  );
+
+  static const TextStyle notValidatedAppRequirement = TextStyle(
+    color: AppColors.black,
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+  );
 }

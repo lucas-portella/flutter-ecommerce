@@ -10,4 +10,5 @@ class AppColors {
     blue: 0.459,
   );
   static const Color white = Colors.white;
+  static const Color green = Color(0xFF009600);
 }

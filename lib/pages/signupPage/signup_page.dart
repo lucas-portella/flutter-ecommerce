@@ -1,5 +1,7 @@
+import 'package:ecommerce/pages/signupPage/signup_page_controller.dart';
 import 'package:ecommerce/shared/app_text_style.dart';
 import 'package:ecommerce/shared/widgets/app_elevated_button.dart';
+import 'package:ecommerce/shared/widgets/app_password_requirement.dart';
 import 'package:ecommerce/shared/widgets/app_text_field.dart';
 import 'package:flutter/material.dart';
 
@@ -13,13 +15,7 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
-  bool isActiveCheckbox = false;
-  bool isActiveButton = false;
-  String email = '';
-  String nome = '';
-  String senha = '';
-  String confirmacaoSenha = '';
-
+  SignupPageController controller = SignupPageController();
   @override
   void initState() {
     super.initState();
@@ -27,13 +23,6 @@ class _SignupPageState extends State<SignupPage> {
 
   @override
   Widget build(BuildContext context) {
-    isActiveButton =
-        isActiveCheckbox &&
-        email.trim().isNotEmpty &&
-        nome.trim().isNotEmpty &&
-        senha.trim().isNotEmpty &&
-        confirmacaoSenha.trim().isNotEmpty;
-
     return Scaffold(
       appBar: AppBar(),
       body: SafeArea(
@@ -58,7 +47,7 @@ class _SignupPageState extends State<SignupPage> {
                 hintText: 'email@dominio.com',
                 onChanged: (value) {
                   setState(() {
-                    email = value;
+                    controller.email = value;
                   });
                 },
               ),
@@ -66,7 +55,7 @@ class _SignupPageState extends State<SignupPage> {
                 hintText: 'nome',
                 onChanged: (value) {
                   setState(() {
-                    nome = value;
+                    controller.nome = value;
                   });
                 },
               ),
@@ -74,7 +63,7 @@ class _SignupPageState extends State<SignupPage> {
                 hintText: 'senha',
                 onChanged: (value) {
                   setState(() {
-                    senha = value;
+                    controller.senha = value;
                   });
                 },
               ),
@@ -82,11 +71,30 @@ class _SignupPageState extends State<SignupPage> {
                 hintText: 'confirmar senha',
                 onChanged: (value) {
                   setState(() {
-                    confirmacaoSenha = value;
+                    controller.confirmarSenha = value;
                   });
                 },
               ),
-              Spacer(),
+              AppPasswordRequirement(
+                isValidated: controller.validaTamanhoSenha(),
+                label: 'Mínimo de 6 caracteres',
+              ),
+              AppPasswordRequirement(
+                isValidated: controller.validaSenhaCaractereEspecial(),
+                label: 'No mínimo um caractere especial',
+              ),
+              AppPasswordRequirement(
+                isValidated: controller.validaSenhaLetraMaiuscula(),
+                label: 'No mínimo uma letra maiúscula',
+              ),
+              AppPasswordRequirement(
+                isValidated: controller.validaSenhaLetraMinuscula(),
+                label: 'No mínimo uma letra minúscula',
+              ),
+              AppPasswordRequirement(
+                isValidated: controller.senhasCoincidem(),
+                label: 'As senhas coincidem',
+              ),
               GestureDetector(
                 onTap: () => print(
                   'Abrindo link para Termos de Serviço e Política de Privacidade',
@@ -94,10 +102,10 @@ class _SignupPageState extends State<SignupPage> {
                 child: Row(
                   children: [
                     Checkbox(
-                      value: isActiveCheckbox,
+                      value: controller.isActiveCheckBox,
                       onChanged: (value) {
                         setState(() {
-                          isActiveCheckbox = !isActiveCheckbox;
+                          controller.changeCheckBoxValue();
                         });
                       },
                     ),
@@ -117,7 +125,7 @@ class _SignupPageState extends State<SignupPage> {
                 ),
               ),
               AppElevatedButton(
-                onPressed: isActiveButton ? () {} : null,
+                onPressed: controller.isActiveButton ? () {} : null,
                 buttonText: 'Continuar',
                 type: ButtonType.filled,
               ),

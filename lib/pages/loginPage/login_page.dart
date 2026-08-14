@@ -1,4 +1,5 @@
-import 'package:ecommerce/pages/signup_page.dart';
+import 'package:ecommerce/pages/passwordRecoveryPage/password_recovery_page.dart';
+import 'package:ecommerce/pages/signupPage/signup_page.dart';
 import 'package:ecommerce/shared/app_text_style.dart';
 import 'package:ecommerce/shared/widgets/app_elevated_button.dart';
 import 'package:ecommerce/shared/widgets/app_text_field.dart';
@@ -79,7 +80,10 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   Spacer(),
                   TextButton(
-                    onPressed: () => {},
+                    onPressed: () => Navigator.pushNamed(
+                      context,
+                      PasswordRecoveryPage.route,
+                    ),
                     child: Text('Esqueci minha senha'),
                   ),
                 ],
