@@ -1,3 +1,4 @@
+import 'package:ecommerce/pages/loginPage/login_page_controller.dart';
 import 'package:ecommerce/pages/passwordRecoveryPage/password_recovery_page.dart';
 import 'package:ecommerce/pages/signupPage/signup_page.dart';
 import 'package:ecommerce/shared/app_text_style.dart';
@@ -15,20 +16,27 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  String email = '';
-  String senha = '';
-  bool isActiveButton = false;
-  bool checkBoxValue = false;
+  LoginPageController controller = LoginPageController();
 
   @override
   initState() {
     super.initState();
   }
 
+  Future<void> login() async {
+    setState(() {
+      controller.isLoading = true;
+    });
+
+    await controller.login();
+
+    setState(() {
+      controller.isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    isActiveButton = email.trim().isNotEmpty && senha.trim().isNotEmpty;
-
     return Scaffold(
       // SafeArea desconta espaços do dispositivo (ex.: barra superior)
       body: SafeArea(
@@ -50,25 +58,23 @@ class _LoginPageState extends State<LoginPage> {
               AppTextField(
                 hintText: 'email@dominio.com',
                 onChanged: (value) {
-                  setState(() => email = value);
-                  print(email);
+                  setState(() => controller.setEmail(value));
                 },
               ),
               AppTextField(
                 hintText: '**********',
                 obscureText: true,
                 onChanged: (value) {
-                  setState(() => senha = value);
-                  print(senha);
+                  setState(() => controller.setSenha(value));
                 },
               ),
               Row(
                 children: [
                   Checkbox(
-                    value: checkBoxValue,
+                    value: controller.checkboxValue,
                     onChanged: (value) {
                       setState(() {
-                        checkBoxValue = !checkBoxValue;
+                        controller.changeCheckboxValue();
                       });
                       print('Cliquei no checkbox');
                     },
@@ -90,12 +96,13 @@ class _LoginPageState extends State<LoginPage> {
               ),
               AppElevatedButton(
                 type: ButtonType.filled,
-                onPressed: isActiveButton
+                onPressed: controller.habilitaLogin()
                     ? () {
-                        print('Cliquei em entrar');
+                        login();
                       }
                     : null,
                 buttonText: 'Entrar',
+                isLoading: controller.isLoading,
               ),
               AppElevatedButton(
                 type: ButtonType.outlined,
