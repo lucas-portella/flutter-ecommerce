@@ -21,6 +21,18 @@ class _SignupPageState extends State<SignupPage> {
     super.initState();
   }
 
+  Future<void> _handleSignup() async {
+    setState(() {
+      controller.isLoading = true;
+    });
+
+    await controller.singup();
+
+    setState(() {
+      controller.isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,6 +78,7 @@ class _SignupPageState extends State<SignupPage> {
                     controller.senha = value;
                   });
                 },
+                obscureText: true,
               ),
               AppTextField(
                 hintText: 'confirmar senha',
@@ -74,6 +87,7 @@ class _SignupPageState extends State<SignupPage> {
                     controller.confirmarSenha = value;
                   });
                 },
+                obscureText: true,
               ),
               AppPasswordRequirement(
                 isValidated: controller.validaTamanhoSenha(),
@@ -125,9 +139,14 @@ class _SignupPageState extends State<SignupPage> {
                 ),
               ),
               AppElevatedButton(
-                onPressed: controller.isActiveButton ? () {} : null,
+                onPressed: controller.isActiveButton
+                    ? () {
+                        _handleSignup();
+                      }
+                    : null,
                 buttonText: 'Continuar',
                 type: ButtonType.filled,
+                isLoading: controller.isLoading,
               ),
             ],
           ),

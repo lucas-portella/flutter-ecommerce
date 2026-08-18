@@ -5,6 +5,7 @@ class SignupPageController {
   String _confirmarSenha = '';
   bool isActiveButton = false;
   bool isActiveCheckBox = false;
+  bool isLoading = false;
 
   final _regexUmaLetraMaiuscula = RegExp(r'[A-Z]');
   final _regexUmaLetraMinuscula = RegExp(r'[a-z]');
@@ -66,5 +67,9 @@ class SignupPageController {
     } else {
       isActiveButton = false;
     }
+  }
+
+  Future<void> singup() async {
+    await Future.delayed(Duration(seconds: 2));
   }
 }
