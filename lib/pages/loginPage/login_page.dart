@@ -17,6 +17,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   LoginPageController controller = LoginPageController();
+  final GlobalKey<FormState> key = GlobalKey<FormState>();
 
   @override
   initState() {
@@ -24,6 +25,8 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> login() async {
+    if (!key.currentState!.validate()) return;
+
     setState(() {
       controller.isLoading = true;
     });
@@ -39,106 +42,113 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       // SafeArea desconta espaços do dispositivo (ex.: barra superior)
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsetsGeometry.symmetric(horizontal: 24),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            spacing: 4,
-            children: [
-              Spacer(),
-              Image.asset(
-                'assets/images/cadiado.png',
-                width: 125,
-                height: 125,
-                fit: BoxFit.contain,
-              ),
-              Text('+DevsEcomm', style: AppTextStyle.title),
-              Spacer(flex: 2),
-              AppTextField(
-                hintText: 'email@dominio.com',
-                onChanged: (value) {
-                  setState(() => controller.setEmail(value));
-                },
-              ),
-              AppTextField(
-                hintText: '**********',
-                obscureText: true,
-                onChanged: (value) {
-                  setState(() => controller.setSenha(value));
-                },
-              ),
-              Row(
-                children: [
-                  Checkbox(
-                    value: controller.checkboxValue,
-                    onChanged: (value) {
-                      setState(() {
-                        controller.changeCheckboxValue();
-                      });
-                      print('Cliquei no checkbox');
-                    },
-                  ),
-                  Text('Lembrar-me'),
-                ],
-              ),
-              Row(
-                children: [
-                  Spacer(),
-                  TextButton(
-                    onPressed: () => Navigator.pushNamed(
-                      context,
-                      PasswordRecoveryPage.route,
+      body: Form(
+        key: key,
+        child: SafeArea(
+          child: Padding(
+            padding: EdgeInsetsGeometry.symmetric(horizontal: 24),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              spacing: 4,
+              children: [
+                Spacer(),
+                Image.asset(
+                  'assets/images/cadiado.png',
+                  width: 125,
+                  height: 125,
+                  fit: BoxFit.contain,
+                ),
+                Text('+DevsEcomm', style: AppTextStyle.title),
+                Spacer(flex: 2),
+                AppTextField(
+                  validator: (value) {
+                    return controller.validateEmail();
+                  },
+                  hintText: 'email@dominio.com',
+                  onChanged: (value) {
+                    setState(() => controller.setEmail(value));
+                  },
+                ),
+                AppTextField(
+                  validator: (value) {
+                    return controller.validateSenha();
+                  },
+                  hintText: '**********',
+                  obscureText: true,
+                  onChanged: (value) {
+                    setState(() => controller.setSenha(value));
+                  },
+                ),
+                Row(
+                  children: [
+                    Checkbox(
+                      value: controller.checkboxValue,
+                      onChanged: (value) {
+                        setState(() {
+                          controller.changeCheckboxValue();
+                        });
+                        print('Cliquei no checkbox');
+                      },
                     ),
-                    child: Text('Esqueci minha senha'),
-                  ),
-                ],
-              ),
-              AppElevatedButton(
-                type: ButtonType.filled,
-                onPressed: controller.habilitaLogin()
-                    ? () {
-                        login();
-                      }
-                    : null,
-                buttonText: 'Entrar',
-                isLoading: controller.isLoading,
-              ),
-              AppElevatedButton(
-                type: ButtonType.outlined,
-                onPressed: () => Navigator.pushNamed(
-                  context,
-                  SignupPage.route,
-                  arguments: 'Vim da primeira tela',
+                    Text('Lembrar-me'),
+                  ],
                 ),
-                buttonText: 'Cadastrar-se',
-              ),
-              Spacer(flex: 2),
-              GestureDetector(
-                onTap: () => {print('Cliquei na linha')},
-                // RichText: Aninhar textos e e modificar seu style
-                child: RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: 'Termos de Serviço',
-                        style: TextStyle(color: Colors.black),
+                Row(
+                  children: [
+                    Spacer(),
+                    TextButton(
+                      onPressed: () => Navigator.pushNamed(
+                        context,
+                        PasswordRecoveryPage.route,
                       ),
-                      TextSpan(
-                        text: ' e ',
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                      TextSpan(
-                        text: 'Política de Privacidade',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    ],
+                      child: Text('Esqueci minha senha'),
+                    ),
+                  ],
+                ),
+                AppElevatedButton(
+                  type: ButtonType.filled,
+                  onPressed: () async {
+                    await login();
+                  },
+                  buttonText: 'Entrar',
+                  isLoading: controller.isLoading,
+                ),
+                AppElevatedButton(
+                  type: ButtonType.outlined,
+                  onPressed: () => Navigator.pushNamed(
+                    context,
+                    SignupPage.route,
+                    arguments: 'Vim da primeira tela',
+                  ),
+                  buttonText: 'Cadastrar-se',
+                ),
+                Spacer(flex: 2),
+                GestureDetector(
+                  onTap: () => {print('Cliquei na linha')},
+                  // RichText: Aninhar textos e e modificar seu style
+                  child: RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: 'Termos de Serviço',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        TextSpan(
+                          text: ' e ',
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                        TextSpan(
+                          text: 'Política de Privacidade',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              Spacer(),
-            ],
+                Spacer(),
+              ],
+            ),
           ),
         ),
       ),

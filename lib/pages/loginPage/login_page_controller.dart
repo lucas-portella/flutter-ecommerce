@@ -5,6 +5,7 @@ class LoginPageController {
   String _senha = '';
   bool isLoading = false;
   bool _checkboxValue = false;
+  final _emailRegex = RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]+$');
 
   void setEmail(String email) => _email = email;
 
@@ -23,5 +24,17 @@ class LoginPageController {
   Future<void> login() async {
     // simula o delay de uma chamada de API
     await Future.delayed(Duration(seconds: 2));
+  }
+
+  String? validateEmail() {
+    if (!_emailRegex.hasMatch(_email)) return 'E-mail inválido';
+
+    return null;
+  }
+
+  String? validateSenha() {
+    if (_senha.isEmpty) return 'Senha vazia';
+
+    return null;
   }
 }
