@@ -1,24 +1,18 @@
+import 'package:flutter/material.dart';
+
 class LoginPageController {
   LoginPageController();
 
-  String _email = '';
-  String _senha = '';
   bool isLoading = false;
   bool _checkboxValue = false;
   final _emailRegex = RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]+$');
-
-  void setEmail(String email) => _email = email;
-
-  void setSenha(String senha) => _senha = senha;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController senhaController = TextEditingController();
 
   void changeCheckboxValue() => _checkboxValue = !_checkboxValue;
 
   bool get checkboxValue {
     return _checkboxValue;
-  }
-
-  bool habilitaLogin() {
-    return _email.trim().isNotEmpty && _senha.trim().isNotEmpty;
   }
 
   Future<void> login() async {
@@ -27,13 +21,13 @@ class LoginPageController {
   }
 
   String? validateEmail() {
-    if (!_emailRegex.hasMatch(_email)) return 'E-mail inválido';
+    if (!_emailRegex.hasMatch(emailController.text)) return 'E-mail inválido';
 
     return null;
   }
 
   String? validateSenha() {
-    if (_senha.isEmpty) return 'Senha vazia';
+    if (senhaController.text.length < 6) return 'Senha inválida';
 
     return null;
   }

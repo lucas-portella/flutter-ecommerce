@@ -16,12 +16,16 @@ class SignupPage extends StatefulWidget {
 
 class _SignupPageState extends State<SignupPage> {
   SignupPageController controller = SignupPageController();
+  final GlobalKey<FormState> key = GlobalKey<FormState>();
+
   @override
   void initState() {
     super.initState();
   }
 
   Future<void> _handleSignup() async {
+    if (!key.currentState!.validate()) return;
+
     setState(() {
       controller.isLoading = true;
     });
@@ -43,33 +47,41 @@ class _SignupPageState extends State<SignupPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
-            spacing: 24,
+            spacing: 18,
             children: [
-              Column(
-                spacing: 2,
-                children: [
-                  Text('Criar uma conta', style: AppTextStyle.title),
-                  Text(
-                    'Insira seus dados para iniciar as compras',
-                    style: AppTextStyle.subtitle,
-                  ),
-                ],
+              Form(
+                child: Column(
+                  spacing: 2,
+                  children: [
+                    Text('Criar uma conta', style: AppTextStyle.title),
+                    Text(
+                      'Insira seus dados para iniciar as compras',
+                      style: AppTextStyle.subtitle,
+                    ),
+                  ],
+                ),
               ),
               AppTextField(
+                validator: (value) {
+                  return controller.validateEmail();
+                },
                 hintText: 'email@dominio.com',
-                onChanged: (value) {
-                  setState(() {
-                    controller.email = value;
-                  });
-                },
+                // onChanged: (value) {
+                //   setState(() {
+                //     controller.email = value;
+                //   });
+                // },
               ),
               AppTextField(
-                hintText: 'nome',
-                onChanged: (value) {
-                  setState(() {
-                    controller.nome = value;
-                  });
+                validator: (value) {
+                  return controller.validateNome();
                 },
+                hintText: 'nome',
+                // onChanged: (value) {
+                //   setState(() {
+                //     controller.nome = value;
+                //   });
+                // },
               ),
               AppTextField(
                 hintText: 'senha',
@@ -140,8 +152,8 @@ class _SignupPageState extends State<SignupPage> {
               ),
               AppElevatedButton(
                 onPressed: controller.isActiveButton
-                    ? () {
-                        _handleSignup();
+                    ? () async {
+                        await _handleSignup();
                       }
                     : null,
                 buttonText: 'Continuar',

@@ -1,25 +1,18 @@
+import 'package:flutter/material.dart';
+
 class SignupPageController {
-  String _email = '';
-  String _nome = '';
   String _senha = '';
   String _confirmarSenha = '';
   bool isActiveButton = false;
   bool isActiveCheckBox = false;
   bool isLoading = false;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController nomeController = TextEditingController();
 
+  final _emailRegex = RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]+$');
   final _regexUmaLetraMaiuscula = RegExp(r'[A-Z]');
   final _regexUmaLetraMinuscula = RegExp(r'[a-z]');
   final _regexCaractereEspecial = RegExp(r'[!@#$%^&*(),.?":{}|<>_\-]');
-
-  set nome(String nome) {
-    _nome = nome;
-    _validaBotao();
-  }
-
-  set email(String email) {
-    _email = email;
-    _validaBotao();
-  }
 
   set senha(String senha) {
     _senha = senha;
@@ -54,6 +47,15 @@ class SignupPageController {
 
   bool senhasCoincidem() {
     return _senha.isNotEmpty && _senha == _confirmarSenha;
+  }
+
+  String? validateNome() {
+    return nomeController.text.isNotEmpty ? null : 'Nome incorreto';
+  }
+
+  String? validateEmail() {
+    print(_emailRegex.hasMatch(emailController.text));
+    return _emailRegex.hasMatch(emailController.text) ? null : 'Email inválido';
   }
 
   void _validaBotao() {

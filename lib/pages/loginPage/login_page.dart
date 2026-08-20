@@ -61,23 +61,25 @@ class _LoginPageState extends State<LoginPage> {
                 Text('+DevsEcomm', style: AppTextStyle.title),
                 Spacer(flex: 2),
                 AppTextField(
+                  controller: controller.emailController,
                   validator: (value) {
                     return controller.validateEmail();
                   },
                   hintText: 'email@dominio.com',
-                  onChanged: (value) {
-                    setState(() => controller.setEmail(value));
-                  },
+                  // onChanged: (value) {
+                  //   setState(() => controller.setEmail(value));
+                  // },
                 ),
                 AppTextField(
+                  controller: controller.senhaController,
                   validator: (value) {
                     return controller.validateSenha();
                   },
                   hintText: '**********',
                   obscureText: true,
-                  onChanged: (value) {
-                    setState(() => controller.setSenha(value));
-                  },
+                  // onChanged: (value) {
+                  //   setState(() => controller.setSenha(value));
+                  // },
                 ),
                 Row(
                   children: [
