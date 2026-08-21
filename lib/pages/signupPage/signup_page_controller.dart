@@ -1,74 +1,66 @@
 import 'package:flutter/material.dart';
 
 class SignupPageController {
-  String _senha = '';
-  String _confirmarSenha = '';
   bool isActiveButton = false;
   bool isActiveCheckBox = false;
   bool isLoading = false;
+  bool hasErrorCheckbox = false;
   TextEditingController emailController = TextEditingController();
   TextEditingController nomeController = TextEditingController();
+  TextEditingController senhaController = TextEditingController();
+  TextEditingController confirmacaoSenhaController = TextEditingController();
 
   final _emailRegex = RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]+$');
   final _regexUmaLetraMaiuscula = RegExp(r'[A-Z]');
   final _regexUmaLetraMinuscula = RegExp(r'[a-z]');
   final _regexCaractereEspecial = RegExp(r'[!@#$%^&*(),.?":{}|<>_\-]');
 
-  set senha(String senha) {
-    _senha = senha;
-    _validaBotao();
-  }
-
-  set confirmarSenha(String confirmarSenha) {
-    _confirmarSenha = confirmarSenha;
-    _validaBotao();
-  }
-
   void changeCheckBoxValue() {
     isActiveCheckBox = !isActiveCheckBox;
-    _validaBotao();
+    hasErrorCheckbox = !isActiveCheckBox;
   }
 
   bool validaTamanhoSenha() {
-    return _senha.length >= 6;
+    return senhaController.text.length >= 6;
   }
 
   bool validaSenhaCaractereEspecial() {
-    return _regexCaractereEspecial.hasMatch(_senha);
+    return _regexCaractereEspecial.hasMatch(senhaController.text);
   }
 
   bool validaSenhaLetraMaiuscula() {
-    return _regexUmaLetraMaiuscula.hasMatch(_senha);
+    return _regexUmaLetraMaiuscula.hasMatch(senhaController.text);
   }
 
   bool validaSenhaLetraMinuscula() {
-    return _regexUmaLetraMinuscula.hasMatch(_senha);
+    return _regexUmaLetraMinuscula.hasMatch(senhaController.text);
   }
 
   bool senhasCoincidem() {
-    return _senha.isNotEmpty && _senha == _confirmarSenha;
+    return senhaController.text.isNotEmpty &&
+        senhaController.text == confirmacaoSenhaController.text;
   }
 
   String? validateNome() {
-    return nomeController.text.isNotEmpty ? null : 'Nome incorreto';
+    return nomeController.text.isEmpty ? 'Nome incorreto' : null;
   }
 
   String? validateEmail() {
-    print(_emailRegex.hasMatch(emailController.text));
     return _emailRegex.hasMatch(emailController.text) ? null : 'Email inválido';
   }
 
-  void _validaBotao() {
-    if (isActiveCheckBox &&
-        validaTamanhoSenha() &&
+  String? validateSenha() {
+    bool result =
         validaSenhaCaractereEspecial() &&
         validaSenhaLetraMaiuscula() &&
         validaSenhaLetraMinuscula() &&
-        senhasCoincidem()) {
-      isActiveButton = true;
-    } else {
-      isActiveButton = false;
-    }
+        validaTamanhoSenha();
+
+    return result ? null : 'Senha inválida';
+  }
+
+  String? validateConfirmacaoSenha() {
+    return senhasCoincidem() ? null : 'Senhas não coincidem';
   }
 
   Future<void> singup() async {
