@@ -1,5 +1,6 @@
 import 'package:ecommerce/pages/loginPage/login_page.dart';
 import 'package:ecommerce/pages/loginPage/login_page_controller.dart';
+import 'package:ecommerce/pages/signupPage/signup_page_controller.dart';
 import 'package:ecommerce/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,6 +19,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) {
             return LoginPageController();
+          },
+        ),
+        ChangeNotifierProvider(
+          create: (context) {
+            return SignupPageController();
           },
         ),
       ],

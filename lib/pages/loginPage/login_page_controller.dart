@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 
+class User {
+  final String nome;
+  final String email;
+
+  User({required this.nome, required this.email});
+}
+
 class LoginPageController extends ChangeNotifier {
   LoginPageController();
 
@@ -9,9 +16,12 @@ class LoginPageController extends ChangeNotifier {
   TextEditingController emailController = TextEditingController();
   TextEditingController senhaController = TextEditingController();
   final GlobalKey<FormState> key = GlobalKey<FormState>();
+  User? user;
 
   Future<void> handleLogin() async {
-    if (!key.currentState!.validate()) return;
+    if (!key.currentState!.validate()) {
+      throw ErrorDescription('Validação incorreta');
+    }
 
     isLoading = true;
     notifyListeners();
@@ -20,6 +30,8 @@ class LoginPageController extends ChangeNotifier {
 
     isLoading = false;
     notifyListeners();
+    emailController.clear();
+    senhaController.clear();
   }
 
   void changeCheckboxValue() {
@@ -34,6 +46,8 @@ class LoginPageController extends ChangeNotifier {
   Future<void> _login() async {
     // simula o delay de uma chamada de API
     await Future.delayed(Duration(seconds: 2));
+
+    user = User(email: emailController.text, nome: 'Lucas Portella');
   }
 
   String? validateEmail() {

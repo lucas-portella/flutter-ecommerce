@@ -1,3 +1,4 @@
+import 'package:ecommerce/features/home/pages/home_page.dart';
 import 'package:ecommerce/pages/loginPage/login_page_controller.dart';
 import 'package:ecommerce/pages/passwordRecoveryPage/password_recovery_page.dart';
 import 'package:ecommerce/pages/signupPage/signup_page.dart';
@@ -82,7 +83,12 @@ class LoginPage extends StatelessWidget {
                     ),
                     AppElevatedButton(
                       type: ButtonType.filled,
-                      onPressed: controller.handleLogin,
+                      onPressed: () async {
+                        try {
+                          await controller.handleLogin();
+                          Navigator.pushNamed(context, HomePage.route);
+                        } catch (e) {}
+                      },
                       buttonText: 'Entrar',
                       isLoading: controller.isLoading,
                     ),
