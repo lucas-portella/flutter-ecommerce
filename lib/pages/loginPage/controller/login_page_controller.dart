@@ -1,11 +1,6 @@
+import 'package:ecommerce/pages/loginPage/model/user.dart';
+import 'package:ecommerce/shared/exceptions/auth_exception.dart';
 import 'package:flutter/material.dart';
-
-class User {
-  final String nome;
-  final String email;
-
-  User({required this.nome, required this.email});
-}
 
 class LoginPageController extends ChangeNotifier {
   LoginPageController();
@@ -18,20 +13,24 @@ class LoginPageController extends ChangeNotifier {
   final GlobalKey<FormState> key = GlobalKey<FormState>();
   User? user;
 
+  void changeIsLoading(bool value) {
+    isLoading = value;
+    notifyListeners();
+  }
+
   Future<void> handleLogin() async {
     if (!key.currentState!.validate()) {
       throw ErrorDescription('Validação incorreta');
     }
 
-    isLoading = true;
-    notifyListeners();
-
-    await _login();
-
-    isLoading = false;
-    notifyListeners();
-    emailController.clear();
-    senhaController.clear();
+    changeIsLoading(true);
+    try {
+      await _login();
+      emailController.clear();
+      senhaController.clear();
+    } finally {
+      changeIsLoading(false);
+    }
   }
 
   void changeCheckboxValue() {
@@ -46,8 +45,12 @@ class LoginPageController extends ChangeNotifier {
   Future<void> _login() async {
     // simula o delay de uma chamada de API
     await Future.delayed(Duration(seconds: 2));
-
-    user = User(email: emailController.text, nome: 'Lucas Portella');
+    if (emailController.text.trim() == 'lucasportella@hotmail.com' ||
+        senhaController.text.trim() == '123456') {
+      user = User(email: emailController.text, nome: 'Lucas Portella');
+    } else {
+      throw AuthException(message: 'E-mail ou senha incorretos');
+    }
   }
 
   String? validateEmail() {

@@ -1,5 +1,5 @@
 import 'package:ecommerce/features/home/pages/home_page.dart';
-import 'package:ecommerce/pages/loginPage/login_page.dart';
+import 'package:ecommerce/pages/loginPage/pages/login_page.dart';
 import 'package:ecommerce/pages/passwordRecoveryPage/password_recovery_page.dart';
 import 'package:ecommerce/pages/signupPage/signup_page.dart';
 import 'package:flutter/material.dart';

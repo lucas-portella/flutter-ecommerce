@@ -1,8 +1,10 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:ecommerce/features/home/pages/home_page.dart';
-import 'package:ecommerce/pages/loginPage/login_page_controller.dart';
+import 'package:ecommerce/pages/loginPage/controller/login_page_controller.dart';
 import 'package:ecommerce/pages/passwordRecoveryPage/password_recovery_page.dart';
 import 'package:ecommerce/pages/signupPage/signup_page.dart';
 import 'package:ecommerce/shared/app_text_style.dart';
+import 'package:ecommerce/shared/exceptions/auth_exception.dart';
 import 'package:ecommerce/shared/widgets/app_elevated_button.dart';
 import 'package:ecommerce/shared/widgets/app_text_field.dart';
 import 'package:flutter/material.dart';
@@ -86,8 +88,17 @@ class LoginPage extends StatelessWidget {
                       onPressed: () async {
                         try {
                           await controller.handleLogin();
-                          Navigator.pushNamed(context, HomePage.route);
-                        } catch (e) {}
+                          if (!context.mounted) return;
+                          Navigator.popAndPushNamed(context, HomePage.route);
+                        } on AuthException catch (e) {
+                          AnimatedSnackBar.material(
+                            e.message,
+                            type: AnimatedSnackBarType.error,
+                            mobileSnackBarPosition:
+                                MobileSnackBarPosition.bottom,
+                            duration: Duration(seconds: 3, milliseconds: 500),
+                          ).show(context);
+                        }
                       },
                       buttonText: 'Entrar',
                       isLoading: controller.isLoading,
