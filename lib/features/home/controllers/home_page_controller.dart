@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:ecommerce/features/home/models/category_model.dart';
 import 'package:ecommerce/features/home/models/products_model.dart';
 import 'package:ecommerce/shared/mocks.dart';

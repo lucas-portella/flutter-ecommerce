@@ -20,8 +20,8 @@ class CategoriesSection extends StatelessWidget {
     return SizedBox(
       height: 158,
       child: switch (state) {
-        CategorySectionStateView.loading => Skeletonizer(
-          enabled: true,
+        _ => Skeletonizer(
+          enabled: state == CategorySectionStateView.loading,
           enableSwitchAnimation: true,
           child: ListView.builder(
             itemCount: categories.length,
@@ -41,24 +41,6 @@ class CategoriesSection extends StatelessWidget {
         ),
         CategorySectionStateView.error => Text(
           'Problema ao resgatar categorias',
-        ),
-        CategorySectionStateView.success => SizedBox(
-          child: ListView.builder(
-            itemCount: categories.length,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) {
-              Category category = categories[index];
-              return Container(
-                margin: EdgeInsets.all(10),
-                child: Column(
-                  children: [
-                    Image.network(category.imageUrl),
-                    Text(category.name, style: AppTextStyle.subtitle),
-                  ],
-                ),
-              );
-            },
-          ),
         ),
       },
     );
