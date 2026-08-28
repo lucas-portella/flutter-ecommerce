@@ -48,4 +48,22 @@ class AppTextStyle {
     fontSize: 16,
     fontWeight: FontWeight.w600,
   );
+
+  static const TextStyle productBrandStyle = TextStyle(
+    color: AppColors.grey600,
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+  );
+
+  static const TextStyle productNameStyle = TextStyle(
+    color: AppColors.black,
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+  );
+
+  static const TextStyle productPriceStyle = TextStyle(
+    color: AppColors.black,
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
+  );
 }
