@@ -66,4 +66,10 @@ class AppTextStyle {
     fontSize: 16,
     fontWeight: FontWeight.w500,
   );
+
+  static const TextStyle bottomSheetProductName = TextStyle(
+    color: AppColors.black,
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+  );
 }

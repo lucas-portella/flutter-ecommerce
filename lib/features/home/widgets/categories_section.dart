@@ -1,48 +1,45 @@
+import 'package:ecommerce/features/home/controllers/home_page_controller.dart';
 import 'package:ecommerce/features/home/models/category_model.dart';
-import 'package:ecommerce/shared/app_text_style.dart';
+import 'package:ecommerce/features/home/widgets/category_card.dart';
 import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-enum CategorySectionStateView { loading, error, success }
-
 class CategoriesSection extends StatelessWidget {
-  final List<Category> categories;
-  final CategorySectionStateView state;
-
   const CategoriesSection({
     super.key,
-    required this.categories,
     required this.state,
+    required this.categories,
   });
+
+  final CategoriesView state;
+  final List<Category> categories;
+
+  static final List<Category> _fakeCategories = List.filled(
+    4,
+    Category(name: 'Categoria', imageUrl: ''),
+  );
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 158,
-      child: switch (state) {
-        _ => Skeletonizer(
-          enabled: state == CategorySectionStateView.loading,
-          enableSwitchAnimation: true,
-          child: ListView.builder(
-            itemCount: categories.length,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) {
-              return Container(
-                margin: EdgeInsets.all(10),
-                child: Column(
-                  children: [
-                    SizedBox(height: 76, width: 76, child: Bone.circle()),
-                    Text('Placeholder'),
-                  ],
-                ),
-              );
-            },
-          ),
+    if (state == CategoriesView.error) {
+      return const Text('Problema ao resgatar categorias');
+    }
+
+    final isLoading = state == CategoriesView.loading;
+    final items = isLoading ? _fakeCategories : categories;
+
+    return Skeletonizer(
+      enabled: isLoading,
+      child: SizedBox(
+        height: 150,
+        child: ListView.builder(
+          itemCount: items.length,
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (context, index) {
+            return CategoryCard(category: items[index]);
+          },
         ),
-        CategorySectionStateView.error => Text(
-          'Problema ao resgatar categorias',
-        ),
-      },
+      ),
     );
   }
 }

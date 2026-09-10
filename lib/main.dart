@@ -1,4 +1,5 @@
 import 'package:ecommerce/features/home/controllers/home_page_controller.dart';
+import 'package:ecommerce/features/home/controllers/products_by_category_controller.dart';
 import 'package:ecommerce/pages/loginPage/pages/login_page.dart';
 import 'package:ecommerce/pages/loginPage/controller/login_page_controller.dart';
 import 'package:ecommerce/pages/signupPage/signup_page_controller.dart';
@@ -17,6 +18,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(
+          create: (context) {
+            return ProductsByCategoryController();
+          },
+        ),
         ChangeNotifierProvider(
           create: (context) {
             return LoginPageController();

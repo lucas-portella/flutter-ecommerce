@@ -1,4 +1,5 @@
 import 'package:ecommerce/features/home/pages/home_page.dart';
+import 'package:ecommerce/features/home/pages/products_by_category_page.dart';
 import 'package:ecommerce/pages/loginPage/pages/login_page.dart';
 import 'package:ecommerce/pages/passwordRecoveryPage/password_recovery_page.dart';
 import 'package:ecommerce/pages/signupPage/signup_page.dart';
@@ -10,5 +11,10 @@ class AppRoutes {
     SignupPage.route: (context) => SignupPage(),
     PasswordRecoveryPage.route: (context) => PasswordRecoveryPage(),
     HomePage.route: (context) => HomePage(),
+    ProductsByCategoryPage.route: (context) {
+      final String categoryName =
+          ModalRoute.of(context)!.settings.arguments as String;
+      return ProductsByCategoryPage(categoryName: categoryName);
+    },
   };
 }
