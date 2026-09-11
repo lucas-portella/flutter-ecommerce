@@ -3,7 +3,6 @@ import 'package:ecommerce/shared/app_text_style.dart';
 import 'package:ecommerce/shared/widgets/app_elevated_button.dart';
 import 'package:ecommerce/shared/widgets/app_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:animated_snack_bar/animated_snack_bar.dart';
 
 class PasswordRecoveryPage extends StatefulWidget {
   const PasswordRecoveryPage({super.key});
