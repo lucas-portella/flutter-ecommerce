@@ -17,23 +17,22 @@ class CartItem {
     }
     quantity--;
   }
+
+  double getSubtotal() {
+    return product.price * quantity;
+  }
 }
 
 class CartController extends ChangeNotifier {
   final List<CartItem> _items = [];
 
-  bool isProductAdded(Product product) {
-    for (CartItem item in _items) {
-      if (item.product == product) return true;
-    }
-    return false;
-  }
+  List<CartItem> get cartItems => _items;
 
   void addProduct(Product product) {
-    if (isProductAdded(product)) return;
+    if (isProductInCart(product)) return;
 
     _items.add(CartItem(product: product, quantity: 1));
-    notifyListeners();
+    // notifyListeners();
   }
 
   void removeProduct(Product product) {
@@ -48,5 +47,25 @@ class CartController extends ChangeNotifier {
     }
 
     return totalPrice;
+  }
+
+  bool isProductInCart(Product product) {
+    for (CartItem item in _items) {
+      if (item.product == product) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  void increaseQuantityOf(CartItem item) {
+    item.increaseQuatity();
+    notifyListeners();
+  }
+
+  void decreaseQuantityOf(CartItem item) {
+    item.decrementQuantity();
+    notifyListeners();
   }
 }

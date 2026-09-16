@@ -1,7 +1,9 @@
+import 'package:ecommerce/features/home/controllers/cart_controller.dart';
 import 'package:ecommerce/features/home/models/products_model.dart';
 import 'package:ecommerce/shared/app_text_style.dart';
 import 'package:ecommerce/shared/widgets/app_elevated_button.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class ProductCard extends StatelessWidget {
@@ -49,12 +51,17 @@ class ProductCard extends StatelessWidget {
                         style: AppTextStyle.title,
                       ),
                       Spacer(),
-                      AppElevatedButton(
-                        onPressed: () {
-                          Navigator.pop(context, true); // retorno do modal
+                      Consumer<CartController>(
+                        builder: (context, cartController, child) {
+                          return AppElevatedButton(
+                            onPressed: () {
+                              cartController.addProduct(product);
+                              Navigator.pop(context, true); // retorno do modal
+                            },
+                            buttonText: 'Adicionar ao carrinho',
+                            type: ButtonType.filled,
+                          );
                         },
-                        buttonText: 'Adicionar ao carrinho',
-                        type: ButtonType.filled,
                       ),
                     ],
                   ),

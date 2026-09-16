@@ -1,3 +1,4 @@
+import 'package:ecommerce/features/home/controllers/cart_controller.dart';
 import 'package:ecommerce/features/home/controllers/home_page_controller.dart';
 import 'package:ecommerce/features/home/controllers/products_by_category_controller.dart';
 import 'package:ecommerce/pages/loginPage/pages/login_page.dart';
@@ -18,6 +19,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(
+          create: (context) {
+            return CartController();
+          },
+        ),
         ChangeNotifierProvider(
           create: (context) {
             return ProductsByCategoryController();
