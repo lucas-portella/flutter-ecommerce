@@ -1,5 +1,7 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:ecommerce/features/home/controllers/cart_controller.dart';
 import 'package:ecommerce/features/home/models/products_model.dart';
+import 'package:ecommerce/features/home/widgets/app_stepper.dart';
 import 'package:ecommerce/shared/app_text_style.dart';
 import 'package:ecommerce/shared/widgets/app_elevated_button.dart';
 import 'package:flutter/material.dart';
@@ -53,9 +55,26 @@ class ProductCard extends StatelessWidget {
                       Spacer(),
                       Consumer<CartController>(
                         builder: (context, cartController, child) {
+                          if (cartController.isProductInCart(product)) {
+                            return AppStepper(
+                              item: cartController.cartItems
+                                  .where((item) => item.product == product)
+                                  .first,
+                            );
+                          }
                           return AppElevatedButton(
                             onPressed: () {
                               cartController.addProduct(product);
+                              AnimatedSnackBar.material(
+                                '\'${product.name}\' adicionado ao carrinho!',
+                                type: AnimatedSnackBarType.success,
+                                mobileSnackBarPosition:
+                                    MobileSnackBarPosition.bottom,
+                                duration: Duration(
+                                  seconds: 2,
+                                  milliseconds: 500,
+                                ),
+                              ).show(context);
                               Navigator.pop(context, true); // retorno do modal
                             },
                             buttonText: 'Adicionar ao carrinho',
