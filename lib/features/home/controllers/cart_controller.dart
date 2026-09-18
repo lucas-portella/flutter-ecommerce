@@ -12,8 +12,8 @@ class CartItem {
   }
 
   void decrementQuantity() {
-    if (quantity == 0) {
-      throw Exception('Empty quantity');
+    if (quantity == 1) {
+      throw StateError('Last item in CartItem');
     }
     quantity--;
   }
@@ -37,6 +37,7 @@ class CartController extends ChangeNotifier {
 
   void removeProduct(Product product) {
     _items.removeWhere((item) => item.product == product);
+    notifyListeners();
   }
 
   double getTotalPrice() {
@@ -51,7 +52,7 @@ class CartController extends ChangeNotifier {
 
   bool isProductInCart(Product product) {
     for (CartItem item in _items) {
-      if (item.product == product) {
+      if (product == item.product) {
         return true;
       }
     }

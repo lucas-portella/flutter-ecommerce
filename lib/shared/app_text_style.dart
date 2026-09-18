@@ -72,4 +72,40 @@ class AppTextStyle {
     fontSize: 14,
     fontWeight: FontWeight.w400,
   );
+
+  static const TextStyle cartProductName = TextStyle(
+    color: AppColors.black,
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+  );
+
+  static const TextStyle cartProductBrand = TextStyle(
+    color: AppColors.grey600,
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+  );
+
+  static const TextStyle cartProductSubtotal = TextStyle(
+    color: AppColors.black,
+    fontSize: 24,
+    fontWeight: FontWeight.w600,
+  );
+
+  static const TextStyle stepperTextStyle = TextStyle(
+    color: AppColors.black,
+    fontSize: 24,
+    fontWeight: FontWeight.w600,
+  );
+
+  static const TextStyle cartBottomNavBarLabelStyle = TextStyle(
+    color: AppColors.grey600,
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
+  );
+
+  static const TextStyle cartBottomNavBarPriceStyle = TextStyle(
+    color: AppColors.black,
+    fontSize: 24,
+    fontWeight: FontWeight.bold,
+  );
 }

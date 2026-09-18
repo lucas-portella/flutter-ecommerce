@@ -25,4 +25,19 @@ class Product {
       description: map['description'] ?? '',
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    return other is Product &&
+        other.name == name &&
+        other.brand == brand &&
+        other.imageUrl == imageUrl &&
+        other.price == price &&
+        other.category == category &&
+        other.description == description;
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(name, brand, imageUrl, price, category, description);
 }
