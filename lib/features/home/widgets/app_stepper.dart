@@ -71,7 +71,10 @@ class AppStepper extends StatelessWidget {
             ),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 8),
-              child: Text(item.quantity.toString()),
+              child: Text(
+                item.quantity.toString(),
+                style: AppTextStyle.stepperTextStyle,
+              ),
             ),
             ElevatedButton(
               onPressed: () {
