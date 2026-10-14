@@ -47,7 +47,7 @@ class LoginPageController extends ChangeNotifier {
     await Future.delayed(Duration(seconds: 2));
     if (emailController.text.trim() == 'lucasportella@hotmail.com' ||
         senhaController.text.trim() == '123456') {
-      user = User(email: emailController.text, nome: 'Lucas Portella');
+      // user = User(email: emailController.text, name: 'Lucas Portella');
     } else {
       throw AuthException(message: 'E-mail ou senha incorretos');
     }

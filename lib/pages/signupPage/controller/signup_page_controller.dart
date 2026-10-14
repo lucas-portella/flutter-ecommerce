@@ -1,3 +1,5 @@
+import 'package:ecommerce/pages/loginPage/model/user.dart';
+import 'package:ecommerce/pages/signupPage/services/sing_up_service.dart';
 import 'package:flutter/material.dart';
 
 class SignupPageController extends ChangeNotifier {
@@ -21,14 +23,16 @@ class SignupPageController extends ChangeNotifier {
       isLoading = true;
       notifyListeners();
 
-      await singup();
-
-      isLoading = false;
-      notifyListeners();
-    }
-
-    if (!isActiveCheckBox) {
-      notifyListeners();
+      try {
+        await singup();
+      } catch (e) {
+        rethrow;
+      } finally {
+        isLoading = false;
+        notifyListeners();
+      }
+    } else {
+      throw Exception('Formulário inválido');
     }
   }
 
@@ -81,7 +85,16 @@ class SignupPageController extends ChangeNotifier {
   }
 
   Future<void> singup() async {
-    await Future.delayed(Duration(seconds: 2));
+    User user = User(
+      name: nomeController.text,
+      email: emailController.text,
+      password: senhaController.text,
+      confirmPassword: confirmacaoSenhaController.text,
+      acceptedTerms: isActiveCheckBox,
+    );
+
+    SingUpService service = SingUpService();
+    await service.register(user);
   }
 
   void rebuild() {
