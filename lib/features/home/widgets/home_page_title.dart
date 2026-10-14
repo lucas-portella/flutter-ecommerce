@@ -11,7 +11,7 @@ class HomePageTitle extends StatelessWidget {
     return Consumer<LoginPageController>(
       builder: (context, loginController, child) {
         return Text(
-          'Olá, ${loginController.user!.nome}',
+          'Olá, ${loginController.user!.name}',
           style: AppTextStyle.homePageTitle,
         );
       },

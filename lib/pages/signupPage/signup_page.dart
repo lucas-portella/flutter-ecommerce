@@ -1,4 +1,4 @@
-import 'package:ecommerce/pages/signupPage/signup_page_controller.dart';
+import 'package:ecommerce/pages/signupPage/controller/signup_page_controller.dart';
 import 'package:ecommerce/shared/app_text_style.dart';
 import 'package:ecommerce/shared/widgets/app_checkbox.dart';
 import 'package:ecommerce/shared/widgets/app_elevated_button.dart';
@@ -145,7 +145,25 @@ class SignupPage extends StatelessWidget {
                     ),
                     AppElevatedButton(
                       onPressed: () async {
-                        await controller.handleSignup();
+                        try {
+                          await controller.handleSignup();
+                          SnackBar snackBar = SnackBar(
+                            content: Text('Conta criada com sucesso!'),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        } catch (e) {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Text('Erro'),
+                                content: Text(
+                                  'Erro ao criar conta: ${e.toString()}',
+                                ),
+                              );
+                            },
+                          );
+                        }
                       },
                       buttonText: 'Continuar',
                       type: ButtonType.filled,
