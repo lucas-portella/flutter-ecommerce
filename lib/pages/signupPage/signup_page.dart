@@ -147,22 +147,31 @@ class SignupPage extends StatelessWidget {
                       onPressed: () async {
                         try {
                           await controller.handleSignup();
-                          SnackBar snackBar = SnackBar(
-                            content: Text('Conta criada com sucesso!'),
-                          );
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          if (context.mounted) {
+                            SnackBar snackBar = SnackBar(
+                              content: Text('Conta criada com sucesso!'),
+                            );
+                            ScaffoldMessenger.of(
+                              context,
+                            ).showSnackBar(snackBar);
+                          }
                         } catch (e) {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                title: Text('Erro'),
-                                content: Text(
-                                  'Erro ao criar conta: ${e.toString()}',
-                                ),
-                              );
-                            },
-                          );
+                          if (context.mounted) {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: Text('Erro'),
+                                  content: Text(
+                                    e.toString().replaceFirst(
+                                      'Exception: ',
+                                      '',
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          }
                         }
                       },
                       buttonText: 'Continuar',

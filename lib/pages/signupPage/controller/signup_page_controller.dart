@@ -84,17 +84,15 @@ class SignupPageController extends ChangeNotifier {
     return senhasCoincidem() ? null : 'Senhas não coincidem';
   }
 
-  Future<void> singup() async {
-    User user = User(
+  Future<User?> singup() async {
+    SingUpService service = SingUpService();
+    return await service.register(
       name: nomeController.text,
       email: emailController.text,
       password: senhaController.text,
       confirmPassword: confirmacaoSenhaController.text,
       acceptedTerms: isActiveCheckBox,
     );
-
-    SingUpService service = SingUpService();
-    await service.register(user);
   }
 
   void rebuild() {
