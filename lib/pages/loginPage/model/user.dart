@@ -1,19 +1,11 @@
 import 'dart:math';
 
-class User {
-  final String id;
-  final String name;
-  final String email;
-  final String createdAt;
+class Token {
   final String accessToken;
   final String tokenType;
   final int expiresIn;
 
-  User({
-    required this.id,
-    required this.name,
-    required this.email,
-    required this.createdAt,
+  Token({
     required this.accessToken,
     required this.tokenType,
     required this.expiresIn,
@@ -21,12 +13,40 @@ class User {
 
   Map<String, dynamic> toJson() {
     return {
+      'accessToken': accessToken,
+      'tokenType': tokenType,
+      'expiresIn': expiresIn,
+    };
+  }
+
+  factory Token.fromJson(Map<String, dynamic> json) {
+    return Token(
+      accessToken: json['accessToken'],
+      tokenType: json['tokenType'],
+      expiresIn: json['expiresIn'],
+    );
+  }
+}
+
+class User {
+  final String id;
+  final String name;
+  final String email;
+  final String createdAt;
+  final Token token;
+
+  User({
+    required this.id,
+    required this.name,
+    required this.email,
+    required this.createdAt,
+    required this.token,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
       'user': {'id': id, 'name': name, 'email': email, 'createdAt': createdAt},
-      'tokens': {
-        'accessToken': accessToken,
-        'tokenType': tokenType,
-        'expiresIn': expiresIn,
-      },
+      'tokens': token.toJson(),
     };
   }
 
@@ -36,9 +56,7 @@ class User {
       name: json['user']['name'],
       email: json['user']['email'],
       createdAt: json['user']['createdAt'],
-      accessToken: json['tokens']['accessToken'],
-      tokenType: json['tokens']['tokenType'],
-      expiresIn: json['user']['expiresIn'],
+      token: Token.fromJson(json['tokens']),
     );
   }
 }

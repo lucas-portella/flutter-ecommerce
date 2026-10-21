@@ -1,5 +1,5 @@
 import 'package:ecommerce/pages/loginPage/model/user.dart';
-import 'package:ecommerce/shared/exceptions/auth_exception.dart';
+import 'package:ecommerce/pages/loginPage/services/login_service.dart';
 import 'package:flutter/material.dart';
 
 class LoginPageController extends ChangeNotifier {
@@ -25,10 +25,10 @@ class LoginPageController extends ChangeNotifier {
 
     changeIsLoading(true);
     try {
-      await _login();
+      user = await _login();
+    } finally {
       emailController.clear();
       senhaController.clear();
-    } finally {
       changeIsLoading(false);
     }
   }
@@ -42,15 +42,12 @@ class LoginPageController extends ChangeNotifier {
     return _checkboxValue;
   }
 
-  Future<void> _login() async {
-    // simula o delay de uma chamada de API
-    await Future.delayed(Duration(seconds: 2));
-    if (emailController.text.trim() == 'lucasportella@hotmail.com' ||
-        senhaController.text.trim() == '123456') {
-      // user = User(email: emailController.text, name: 'Lucas Portella');
-    } else {
-      throw AuthException(message: 'E-mail ou senha incorretos');
-    }
+  Future<User?> _login() async {
+    LoginService loginService = LoginService();
+    return await loginService.login(
+      email: emailController.text,
+      password: senhaController.text,
+    );
   }
 
   String? validateEmail() {
