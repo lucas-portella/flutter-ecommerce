@@ -90,9 +90,9 @@ class LoginPage extends StatelessWidget {
                           await controller.handleLogin();
                           if (!context.mounted) return;
                           Navigator.popAndPushNamed(context, HomePage.route);
-                        } on AuthException catch (e) {
+                        } on Exception catch (e) {
                           AnimatedSnackBar.material(
-                            e.message,
+                            e.toString().replaceFirst('Exception: ', ''),
                             type: AnimatedSnackBarType.error,
                             mobileSnackBarPosition:
                                 MobileSnackBarPosition.bottom,
