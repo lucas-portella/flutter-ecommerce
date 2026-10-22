@@ -1,6 +1,7 @@
 import 'package:ecommerce/features/home/models/category_model.dart';
 import 'package:ecommerce/features/home/models/products_model.dart';
 import 'package:ecommerce/features/home/services/categories_service.dart';
+import 'package:ecommerce/features/home/services/products_service.dart';
 import 'package:ecommerce/shared/mocks.dart';
 import 'package:flutter/material.dart';
 
@@ -36,12 +37,10 @@ class HomePageController extends ChangeNotifier {
   }
 
   void getProducts() async {
+    ProductsService service = ProductsService();
     changeProductsState(ProductsView.loading);
-    await Future.delayed(Duration(seconds: 3));
     try {
-      products = productsJson.map((item) {
-        return Product.fromMap(item);
-      }).toList();
+      products = await service.getProducts();
       changeProductsState(ProductsView.success);
     } catch (e) {
       changeProductsState(ProductsView.error);
