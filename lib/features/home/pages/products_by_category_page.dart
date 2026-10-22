@@ -41,6 +41,8 @@ class _ProductsByCategoryPageState extends State<ProductsByCategoryPage> {
           final List<Product> fakeProducts = List.filled(
             4,
             Product(
+              categoryId: 'id',
+              id: 'id',
               brand: 'Marca do produto',
               name: 'Nome do produto',
               imageUrl: '',
