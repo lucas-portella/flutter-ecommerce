@@ -12,11 +12,11 @@ class CategoriesSection extends StatelessWidget {
   });
 
   final CategoriesView state;
-  final List<Category> categories;
+  final List<Category>? categories;
 
   static final List<Category> _fakeCategories = List.filled(
     4,
-    Category(name: 'Categoria', imageUrl: ''),
+    Category(name: 'Categoria', imageUrl: '', id: ''),
   );
 
   @override
@@ -33,7 +33,7 @@ class CategoriesSection extends StatelessWidget {
       child: SizedBox(
         height: 150,
         child: ListView.builder(
-          itemCount: items.length,
+          itemCount: items!.length,
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
             return CategoryCard(category: items[index]);
